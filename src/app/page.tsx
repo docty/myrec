@@ -14,8 +14,8 @@ export default function Home() {
     fetch(`api/research?q=${search}&start=${start}`)
       .then(res => res.json())
       .then(output => {
-        setData((p) => [...p, output])
-
+        setData((p) => [...p, ...output]) 
+        
       }).catch(e => console.log(e))
       .finally(() => start = start + 10)
   }
