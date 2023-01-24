@@ -1,91 +1,77 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+'use client'
+import { useRef, useState } from "react";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 export default function Home() {
+  const [search, setSearch] = useState('');
+  const [data, setData] = useState<IJournal[]>([]);
+  const tableRef = useRef(null);
+
+  let start = 0;
+
+  const getData = () => {
+
+    fetch(`api/research?q=${search}&start=${start}`)
+      .then(res => res.json())
+      .then(output => {
+        setData((p) => [...p, output])
+
+      }).catch(e => console.log(e))
+      .finally(() => start = start + 10)
+  }
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div>
+      <h1>Web Scraping</h1>
+      <input type="text" name="" id="search" placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <button onClick={getData} >Search </button>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+      <span className="loading visibility" id="loading"></span>
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      <DownloadTableExcel
+        filename="users table"
+        sheet="users"
+        currentTableRef={tableRef.current}
+      >
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
+        <button> Export excel </button>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </DownloadTableExcel>
+
+
+      <table style={{ width: '100%' }} ref={tableRef}>
+        <thead>
+          <tr>
+            <th> SN </th>
+            <th> Title </th>
+            <th> Abstract</th>
+            <th> Website</th>
+          </tr>
+        </thead>
+        <tbody id="table_body" style={{ textAlign: 'center' }}>
+          {
+            (data.length > 0) ? data.map((element, index) => (
+              <tr key={index}>
+                <td>{index + 1 + start}</td>
+                <td>{element.title ? element.title : ''}</td>
+                <td>{element.abstract ? element.abstract : ''}</td>
+                <td><a href={element.url}>Visit Website</a></td>
+              </tr>
+            )) : null
+          }
+        </tbody>
+      </table>
+
+
+      <button onClick={getData}>Load More </button>
+    </div>
   )
+}
+
+
+interface IJournal {
+  title: string;
+  abstract: string;
+  url?: string;
 }
