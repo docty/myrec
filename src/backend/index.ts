@@ -28,7 +28,7 @@ export const main = async (option: IOption) => {
 
     const link = await getLink($);
 
-    // const container = await synthesis(link)
+    const container = await synthesis(link)
 
 
 
