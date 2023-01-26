@@ -11,7 +11,7 @@ function sleep(ms: number) {
 
 export const getLink = async ($: CheerioAPI) => {
 
-    //const selector = $('#gs_res_ccl_mid > div');
+    const selector = $('#gs_res_ccl_mid > div');
 
     const links: string[] = [];
 
@@ -23,7 +23,8 @@ export const getLink = async ($: CheerioAPI) => {
     //         links.push(result)
 
     // });
-
+    //console.log(selector);
+    
     return links
 
 
