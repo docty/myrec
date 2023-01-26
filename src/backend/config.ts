@@ -1,3 +1,5 @@
+import { CheerioAPI } from "cheerio";
+ 
 import { Page, Browser } from "puppeteer";
 import journalSelector from "./journal";
 
@@ -6,25 +8,21 @@ function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const getLink = async (page: Page) => {
+export const getLink = async ($: CheerioAPI) => {
 
-    const resultSelector = '#gs_res_ccl_mid > div';
+    const selector = $('#gs_res_ccl_mid > div');
 
+    const links: string[] = [];
 
-    const link = await page.evaluate(selector => {
-        const holder: string[] = [];
+    selector.each((idx, el) => {
 
-        document.querySelectorAll(selector).forEach(anchor => {
-            const value = anchor.querySelector('.gs_ri > h3 > a') as HTMLLinkElement;
-            if (value) {
-                holder.push(value.href)
-            }
-        })
+        const result = $(el).find('.gs_ri > h3 > a').attr('href') as string
 
-        return holder;
-    }, resultSelector);
+        links.push(result)
 
-    return link
+    }); 
+    
+    return links
 
 
 }

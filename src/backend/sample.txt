@@ -1,0 +1,13 @@
+
+    // const link = await page.evaluate(selector => {
+    //     const holder: string[] = [];
+
+    //     document.querySelectorAll(selector).forEach(anchor => {
+    //         const value = anchor.querySelector('.gs_ri > h3 > a') as HTMLLinkElement;
+    //         if (value) {
+    //             holder.push(value.href)
+    //         }
+    //     })
+
+    //     return holder;
+    // }, resultSelector);

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 export default function Home() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('location routing problems');
   const [data, setData] = useState<IJournal[]>([]);
   const tableRef = useRef(null);
 
