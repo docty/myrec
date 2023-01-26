@@ -16,7 +16,8 @@ export const main = async (option: IOption) => {
   url.searchParams.set('q', option.query)
   url.searchParams.set('btnG', '')
   url.searchParams.set('oq', 'r')
-
+  console.log(option.start);
+  
   console.log(url.href);
 
   try {
@@ -29,7 +30,7 @@ export const main = async (option: IOption) => {
 
     const container = await synthesis(link)
    
-    console.log(container);
+     
     
     // await browser.close();
     option.onComplete(container)

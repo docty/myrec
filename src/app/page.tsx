@@ -17,15 +17,16 @@ export default function Home() {
         setData((p) => [...p, ...output])  
         
       }).catch(e => console.log(e))
-      .finally(() => start = start + 10)
+       
+      start = start + 10
   }
 
 
   return (
-    <div>
-      <h1>Web Scraping</h1>
-      <input type="text" name="" id="search" placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      <button onClick={getData} >Search </button>
+    <div className="p-12">
+      <h1 className="text-large font-bold my-12">Web Scraping</h1>
+      <input  className="border p-4  " placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <button onClick={getData} className={'bg-blue-600 text-white p-4 rounded-md'} >Search </button>
 
       <span className="loading visibility" id="loading"></span>
 
@@ -35,7 +36,7 @@ export default function Home() {
         currentTableRef={tableRef.current}
       >
 
-        <button> Export excel </button>
+        <button className={'bg-pink-600 text-white p-4 rounded-md'} > Export excel </button>
 
       </DownloadTableExcel>
 
@@ -56,7 +57,7 @@ export default function Home() {
                 <td>{index + 1 + start}</td>
                 <td>{element.title ? element.title : ''}</td>
                 <td>{element.abstract ? element.abstract : ''}</td>
-                <td><a href={element.url}>Visit Website</a></td>
+                <td><a href={element.url} className={'text-blue-400'}>Visit Website</a></td>
               </tr>
             )) : null
           }
@@ -64,7 +65,7 @@ export default function Home() {
       </table>
 
 
-      <button onClick={getData}>Load More </button>
+      <button onClick={getData} className={'bg-blue-600 text-white p-4 rounded-md'} >Load More </button>
     </div>
   )
 }
