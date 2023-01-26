@@ -49,8 +49,8 @@ export const synthesis = async (link: string[]) => {
             //         //console.log(headers['content-type']);
             const $ = load(data)
 
-            //         const extract = exaction($, headers, url)
-            holder.push(url)
+            const extract = exaction($, headers, url)
+            holder.push(extract)
             //         //response = await page.goto(item, { timeout: 90000, waitUntil: 'load' });
         } catch (error) {
             continue;
