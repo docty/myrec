@@ -33,7 +33,7 @@ export const main = async (option: IOption) => {
 
 
     // await browser.close();
-    option.onComplete(link)
+    option.onComplete(container)
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
     throw error;
