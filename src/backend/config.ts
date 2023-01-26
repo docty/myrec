@@ -40,24 +40,24 @@ export const synthesis = async (link: string[]) => {
         //     console.log((start / link.length) * 100);
         //     await sleep(5000);
         //     //let response = null;
-        //     try {
+        try {
 
 
-        //         const { data, headers } = await axios.get(url)
+            const { data, headers } = await axios.get(url)
 
 
-        //         //console.log(headers['content-type']);
-        //         const $ = load(data)
+            //         //console.log(headers['content-type']);
+            //         const $ = load(data)
 
-        //         const extract = exaction($, headers, url)
-                    holder.push(url)
-        //         //response = await page.goto(item, { timeout: 90000, waitUntil: 'load' });
-        //     } catch (error) {
-        //         continue;
-        //         //throw 'error has occured from synthesis function \n' + error
+            //         const extract = exaction($, headers, url)
+            holder.push(url)
+            //         //response = await page.goto(item, { timeout: 90000, waitUntil: 'load' });
+        } catch (error) {
+            //         continue;
+            //         //throw 'error has occured from synthesis function \n' + error
 
 
-        //     }
+        }
 
         //     await sleep(5000);
         //     start = start + 1;
