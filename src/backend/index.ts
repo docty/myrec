@@ -22,7 +22,7 @@ export const main = async (option: IOption) => {
 
   try {
     //await page.goto(url.href)
-    const { data } = await axios.get(url.href)
+    const { data } = await axios.get('http://webcode.me/')
 
     const $ = load(data)
 

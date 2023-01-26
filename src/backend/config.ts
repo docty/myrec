@@ -11,9 +11,9 @@ function sleep(ms: number) {
 
 export const getLink = async ($: CheerioAPI) => {
 
-    const selector = $('#gs_res_ccl_mid > div');
-
-    const links: string[] = [];
+    //const selector = $('#gs_res_ccl_mid > div');
+    let title = $('title');
+   // const links: string[] = [];
 
     // selector.each((idx, el) => {
 
@@ -25,7 +25,7 @@ export const getLink = async ($: CheerioAPI) => {
     // });
     //console.log(selector);
     
-    return links
+    return title.text()
 
 
 }
