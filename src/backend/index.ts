@@ -22,7 +22,7 @@ export const main = async (option: IOption) => {
 
   try {
     //await page.goto(url.href)
-    // const { data } = await axios.get(url.href)
+    const { data } = await axios.get(url.href)
 
     // const $ = load(data)
 
@@ -33,7 +33,7 @@ export const main = async (option: IOption) => {
 
 
     // await browser.close();
-    option.onComplete('link')
+    option.onComplete(data)
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
     throw error;
