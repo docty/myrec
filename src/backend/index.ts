@@ -24,7 +24,7 @@ export const main = async (option: IOption) => {
     //await page.goto(url.href)
     const { data } = await axios.get(url.href)
 
-    // const $ = load(data)
+    const $ = load(data)
 
     // const link = await getLink($);
 
