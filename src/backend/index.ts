@@ -28,12 +28,12 @@ export const main = async (option: IOption) => {
 
     const link = await getLink($);
 
-    //const container = await synthesis(link)
+    const container = await synthesis(link)
 
 
 
     // await browser.close();
-    option.onComplete(link)
+    option.onComplete(container)
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
     throw error;

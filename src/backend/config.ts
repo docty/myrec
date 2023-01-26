@@ -64,7 +64,7 @@ export const synthesis = async (link: string[]) => {
     //     //await page.close()
     // }
 
-    return holder;
+    return link.length;
 
 }
 
