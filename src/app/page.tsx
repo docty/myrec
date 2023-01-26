@@ -4,19 +4,20 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 export default function Home() {
   const [search, setSearch] = useState('location routing problems');
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<IJournal[]>([]);
   const tableRef = useRef(null);
 
-  let start = 10;
+  let start = 0;
 
   const getData = () => {
-
+    setIsLoading(true);
     fetch(`api/research?q=${search}&start=${start}`)
       .then(res => res.json())
       .then(output => {
         setData((p) => [...p, ...output])
-        //console.log(output);
 
+        setIsLoading(false)
       }).catch(e => console.log(e))
 
     start = start + 10
@@ -27,9 +28,12 @@ export default function Home() {
     <div className="p-12">
       <h1 className="text-large font-bold my-12">Web Scraping</h1>
       <input className="border p-4  w-full my-3" placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      <button onClick={getData} className={'bg-blue-600 text-white p-4 rounded-md'} >Search </button>
+      <button onClick={getData} className={'bg-blue-600 block text-white p-4 rounded-md'} >Search </button>
 
-      <span className="loading visibility" id="loading"></span>
+      {
+        isLoading && <div className="w-8 h-8 border-b-white animate-spin rounded-full border-4 border-black " ></div>
+
+      }
 
       <DownloadTableExcel
         filename="users table"
@@ -37,7 +41,7 @@ export default function Home() {
         currentTableRef={tableRef.current}
       >
 
-        <button className={'bg-pink-600 text-white p-4 rounded-md'} > Export excel </button>
+        <button className={'bg-pink-600 block text-white p-4 rounded-md'} > Export excel </button>
 
       </DownloadTableExcel>
 

@@ -9,8 +9,8 @@ const journalSelector: Record<string, IJournal> = {
         abstract: '.c-article-section__content  > p'
     },
     'https://www.tandfonline.com': {
-        title: '.literatumPublicationTitle > div > div > h1 > span',
-        abstract: '#mainTabPanel > article > div.hlFld-Abstract > div.abstractSection.abstractInFull > p'
+        title: '.widget-body > h1 > span',
+        abstract: 'div.abstractSection.abstractInFull > p'
     },
     'https://onlinelibrary.wiley.com/': {
         title: '.citation__title',
@@ -83,6 +83,14 @@ const journalSelector: Record<string, IJournal> = {
     'https://pubs.rsc.org/': {
         title: '.title_heading',
         abstract: '.abstract > p'
+    },
+    'https://www.preprints.org/': {
+        title: 'h1.show-title',
+        abstract: '#submission-content > div:nth-child(8)'
+    },
+    'https://www.mdpi.com/':{
+        title: '.title',
+        abstract: '#html-abstract-title > div'
     }
 
 
