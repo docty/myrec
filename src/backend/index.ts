@@ -26,7 +26,7 @@ export const main = async (option: IOption) => {
 
     const $ = load(data)
 
-    // const link = await getLink($);
+    const link = await getLink($);
 
     //const container = await synthesis(link)
 
