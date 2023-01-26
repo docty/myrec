@@ -7,25 +7,26 @@ export default function Home() {
   const [data, setData] = useState<IJournal[]>([]);
   const tableRef = useRef(null);
 
-  let start = 0;
+  let start = 10;
 
   const getData = () => {
 
     fetch(`api/research?q=${search}&start=${start}`)
       .then(res => res.json())
       .then(output => {
-        setData((p) => [...p, ...output])  
-        
+        setData((p) => [...p, ...output])
+        //console.log(output);
+
       }).catch(e => console.log(e))
-       
-      start = start + 10
+
+    start = start + 10
   }
 
 
   return (
     <div className="p-12">
       <h1 className="text-large font-bold my-12">Web Scraping</h1>
-      <input  className="border p-4  " placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <input className="border p-4  w-full my-3" placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
       <button onClick={getData} className={'bg-blue-600 text-white p-4 rounded-md'} >Search </button>
 
       <span className="loading visibility" id="loading"></span>
@@ -41,7 +42,7 @@ export default function Home() {
       </DownloadTableExcel>
 
 
-      <table style={{ width: '100%' }} ref={tableRef}>
+      <table className="w-full my-12" ref={tableRef}>
         <thead>
           <tr>
             <th> SN </th>

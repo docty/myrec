@@ -1,7 +1,7 @@
 //import { launch, Page } from "puppeteer";
 import { getLink, synthesis } from "./config";
 import axios from 'axios'
-import {load} from "cheerio";
+import { load } from "cheerio";
 export const main = async (option: IOption) => {
 
   //const browser = await launch({ headless: false, timeout: 0 })
@@ -16,34 +16,34 @@ export const main = async (option: IOption) => {
   url.searchParams.set('q', option.query)
   url.searchParams.set('btnG', '')
   url.searchParams.set('oq', 'r')
-  console.log(option.start);
-  
-  console.log(url.href);
+   
+
+  //console.log(url.href);
 
   try {
     //await page.goto(url.href)
-    const {data} = await axios.get(url.href)
+    const { data } = await axios.get(url.href)
 
     const $ =  load(data)
-   
+
     const link = await getLink($);
 
     const container = await synthesis(link)
-   
-     
-    
+
+ 
+
     // await browser.close();
     option.onComplete(container)
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
     throw error;
-    
+
     //await browser.close();
   }
 };
 
 
- 
+
 
 interface IOption {
   query: string;

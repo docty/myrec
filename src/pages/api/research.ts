@@ -6,15 +6,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 //   name: string
 // }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
  
-  main({
+  await main({
     query:  req.query.q as string,
     start: req.query.start as string,
-    onComplete: function (data: any): void { 
+    onComplete: function (data: any): void {
+      //res.setHeader('Cache-Control', 'max-age=180000'); 
       res.status(200).json(data)
     }
 })
