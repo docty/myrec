@@ -11,21 +11,21 @@ function sleep(ms: number) {
 
 export const getLink = async ($: CheerioAPI) => {
 
-    //const selector = $('#gs_res_ccl_mid > div');
-    let title = $('title');
-   // const links: string[] = [];
+    const selector = $('#gs_res_ccl_mid > div');
+    //let title = $('title');
+    const links: string[] = [];
 
-    // selector.each((idx, el) => {
+    selector.each((idx, el) => {
 
-    //     const result = $(el).find('.gs_ri > h3 > a').attr('href') as string
+        const result = $(el).find('.gs_ri > h3 > a').attr('href') as string
 
-    //     if (result)
-    //         links.push(result)
+        if (result)
+            links.push(result)
 
-    // });
+    });
     //console.log(selector);
-    
-    return title.text()
+
+    return links
 
 
 }
