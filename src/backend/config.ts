@@ -1,5 +1,6 @@
-import { CheerioAPI } from "cheerio";
- 
+import axios, { AxiosHeaders, AxiosResponseHeaders } from "axios";
+import { CheerioAPI, load } from "cheerio";
+
 import { Page, Browser } from "puppeteer";
 import journalSelector from "./journal";
 
@@ -18,75 +19,99 @@ export const getLink = async ($: CheerioAPI) => {
 
         const result = $(el).find('.gs_ri > h3 > a').attr('href') as string
 
-        links.push(result)
+        if (result)
+            links.push(result)
 
-    }); 
-    
+    });
+
     return links
 
 
 }
 
 
-export const synthesis = async (link: string[], browser: Browser) => {
+export const synthesis = async (link: string[]) => {
     const holder: any[] = [];
     let start = 1;
 
-    for (const item of link) {
-        const page = await browser.newPage();
+    for (const url of link) {
+        // const page = await browser.newPage();
         console.log((start / link.length) * 100);
         await sleep(5000);
-        let response = null;
+        //let response = null;
         try {
-            response = await page.goto(item, { timeout: 90000, waitUntil: 'load' });
+
+
+            const { data, headers } = await axios.get(url)
+
+
+            //console.log(headers['content-type']);
+            const $ = load(data)
+
+            const extract = exaction($, headers, url)
+            holder.push(extract)
+            //response = await page.goto(item, { timeout: 90000, waitUntil: 'load' });
         } catch (error) {
-            console.log('Error from Synthesis function');
+            continue;
+            //throw 'error has occured from synthesis function \n' + error
+
 
         }
 
-        if (response?.ok) {
-            const contentType = response?.headers()['content-type'];
-            const boundary = contentType?.split(';')[0];
-
-            if (boundary === 'application/pdf') {
-                console.log('I cannot process pdf files. All pdf files will be automatically downloaded');
-            } else {
-                const newUrl = new URL(response?.url()!);
-                const output = await processPage(newUrl, page);
-                holder.push(output)
-            }
-        }
+        await sleep(5000);
         start = start + 1;
-        await page.close()
+        //await page.close()
     }
-
 
     return holder;
 
 }
 
+const exaction = ($: CheerioAPI, headers: any, url: string) => {
+    //console.log(headers["Content-Type"]);
 
-const processPage = async (url: URL, page: Page) => {
+
+    // if (response?.ok) {
+    const contentType = headers['content-type'];
+    const boundary = contentType?.split(';')[0];
+
+    if (boundary === 'application/pdf') {
+        console.log('I cannot process pdf files. All pdf files will be automatically downloaded');
+        return { url }
+    } else {
+        const newUrl = new URL(url);
+        const output = processPage(newUrl, $);
+        return output;
+
+    }
+
+
+}
+
+
+const processPage = (url: URL, $: CheerioAPI) => {
 
     const journal = journalSelector[url.origin];
 
 
+
     try {
 
-        const title = await page.$eval(journal.title, (item) => (
-            item.textContent
-        ))
+        const title = $(journal.title).text();
+        let abstracts = $(journal.abstract);
 
-
-        const abstract = await page.$$eval(journal.abstract, (item) => (
-            item.map(v => v.textContent)
-        ))
+        const abstract = abstracts.map((v, el) => $(el).text())
+        //abstract.
+        // , (item) => (
+        //     item.map(v => v.textContent)
+        // ))
 
         const output = {
-            abstract: abstract.join(' '),
+            abstract: abstract.toArray().join(' '),
             title: title,
             url: url.href
         }
+
 
         return output;
     } catch (error) {
