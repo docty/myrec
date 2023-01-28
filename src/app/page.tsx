@@ -7,20 +7,17 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<IJournal[]>([]);
   const tableRef = useRef(null);
+  const start = useRef(0)
 
-  let start = 0;
 
   const getData = async () => {
     setIsLoading(true);
 
 
-    const result = await axios.get(`api/research?q=${search}&start=${start}`)
-
-    //const result = await fetch(`api/research?q=${search}&start=${start}`);
+    const result = await axios.get(`api/research?q=${search}&start=${start.current}`)
 
     if (result.status) {
-      start = start + 10
-      console.log(result.data);
+      start.current = start.current + 10;
       setData((p) => [...p, ...result.data])
       setIsLoading(false);
     } else {
@@ -28,7 +25,6 @@ export default function Home() {
       setIsLoading(false);
     }
 
-    //setData((p) => [...p, ...output])
 
 
 
@@ -72,7 +68,7 @@ export default function Home() {
           {
             (data.length > 0) ? data.map((element, index) => (
               <tr key={index}>
-                <td>{index + 1 + start}</td>
+                <td>{index + 1}</td>
                 <td>{element.title ? element.title : ''}</td>
                 <td>{element.abstract ? element.abstract : ''}</td>
                 <td><a href={element.url} className={'text-blue-400'}>Visit Website</a></td>

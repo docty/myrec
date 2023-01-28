@@ -4,8 +4,7 @@ import axios from 'axios'
 import { load } from "cheerio";
 export const main = async (option: IOption) => {
 
-  //const browser = await launch({ headless: false, timeout: 0 })
-  //const page = await browser.newPage();
+
 
   console.log('Browser opened successfully!!!');
 
@@ -17,29 +16,25 @@ export const main = async (option: IOption) => {
   url.searchParams.set('btnG', '')
   url.searchParams.set('oq', 'r')
 
-  console.log(option.start);
-  //console.log(url.href);
+
 
   try {
-    //await page.goto(url.href)
+
     const { data } = await axios.get(url.href)
-    
-    
-    // const $ = load(data)
-
-    // const link = await getLink($);
-
-    // const container = await synthesis(link)
 
 
+    const $ = load(data)
 
-    // await browser.close();
-    option.onComplete('container')
+    const link = await getLink($);
+
+    const container = await synthesis(link)
+
+    option.onComplete(container)
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
-    throw error;
+    option.onError(error)
 
-    //await browser.close();
+
   }
 };
 
@@ -50,4 +45,5 @@ interface IOption {
   query: string;
   start: string;
   onComplete: (data: any) => void
+  onError: (error: any) => void
 }
