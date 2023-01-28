@@ -35,7 +35,7 @@ export const synthesis = async (link: string[]) => {
     for (const url of link) {
 
         //     console.log((start / link.length) * 100);
-        await sleep(10000);
+        await sleep(60000);
         
         try {
 

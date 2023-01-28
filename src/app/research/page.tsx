@@ -2,8 +2,7 @@
 import { useRef, useState } from "react";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
-import axios from "axios";
-import Image from "next/image";
+import axios from "axios"; 
 import Link from "next/link";
 export default function Home() {
     const [search, setSearch] = useState('location routing problems');
@@ -50,7 +49,7 @@ export default function Home() {
 
             {
                 isLoading && <div className="px-48">
-                    <div className="h-1 bg-violet-100">
+                    <div className="h-1 bg-violet-100 max-w-full">
                         <span className="h-1 bg-blue-500 w-56 block move-load" ></span>
                     </div>
                 </div>
