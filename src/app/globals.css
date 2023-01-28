@@ -1,16 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-table {
-    margin-top: 10px;
-}
+ 
 
 table,
 th,
 td {
     border: 1px solid #000;
     border-collapse: collapse;
-    padding: 5px;
+    padding: 10px;
 }
 
 .loading {
@@ -46,4 +44,24 @@ input {
 
 button {
     padding: 5px;
+}
+
+.bg-banner {
+    background: linear-gradient(90deg, #4e54c8 0%,#8f94fb 35%);
+}
+
+.move-load{
+   
+    animation: moveme 1000ms infinite linear;
+}
+
+
+@keyframes moveme {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(calc(100vw - 38vw));
+    }
 }

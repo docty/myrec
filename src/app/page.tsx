@@ -1,92 +1,31 @@
 'use client'
-import { useRef, useState } from "react";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
-import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 export default function Home() {
-  const [search, setSearch] = useState('location routing problems');
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<IJournal[]>([]);
-  const tableRef = useRef(null);
-  const start = useRef(0)
-
-
-  const getData = async () => {
-    setIsLoading(true);
-
-
-    const result = await axios.get(`api/research?q=${search}&start=${start.current}`)
-
-    if (result.status) {
-      start.current = start.current + 10;
-      setData((p) => [...p, ...result.data])
-      setIsLoading(false);
-    } else {
-      console.log('error');
-      setIsLoading(false);
-    }
-
-
-
-
-
-
-  }
 
 
   return (
-    <div className="p-12">
-      <h1 className="text-large font-bold my-12">Web Scraping</h1>
-      <input className="border p-4  w-full my-3" placeholder="Enter search ..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      <button onClick={getData} className={'bg-blue-600 block text-white p-4 rounded-md'} >Search </button>
-
-      {
-        isLoading && <div className="w-8 h-8 border-b-white animate-spin rounded-full border-4 border-black " ></div>
-
-      }
-
-      <DownloadTableExcel
-        filename="users table"
-        sheet="users"
-        currentTableRef={tableRef.current}
-      >
-
-        <button className={'bg-pink-600 block text-white p-4 rounded-md'} > Export excel </button>
-
-      </DownloadTableExcel>
-
-
-      <table className="w-full my-12" ref={tableRef}>
-        <thead>
-          <tr>
-            <th> SN </th>
-            <th> Title </th>
-            <th> Abstract</th>
-            <th> Website</th>
-          </tr>
-        </thead>
-        <tbody id="table_body" style={{ textAlign: 'center' }}>
-          {
-            (data.length > 0) ? data.map((element, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{element.title ? element.title : ''}</td>
-                <td>{element.abstract ? element.abstract : ''}</td>
-                <td><a href={element.url} className={'text-blue-400'}>Visit Website</a></td>
-              </tr>
-            )) : null
-          }
-        </tbody>
-      </table>
-
-
-      <button onClick={getData} className={'bg-blue-600 text-white p-4 rounded-md'} >Load More </button>
+    <div>
+      <nav className=' p-5 px-48 flex justify-between items-center'>
+        <Link href={'/'} className={'text-3xl font-bold'}>My<span className='text-pink-600'>Rec</span></Link>
+        <Link href={'/research'} className='bg-pink-600 text-white rounded-lg p-3'>Get Started</Link>
+      </nav>
+      <Banner />
     </div>
   )
 }
 
 
-interface IJournal {
-  title: string;
-  abstract: string;
-  url?: string;
-}
+const Banner = () => (
+  <div className="h-56s bg-banner flex items-center p-12 px-48 gap-x-8">
+    <div className="flex flex-col gap-y-12 flex-1">
+      <h3 className="text-5xl font-bold text-white">Simplify all your research query</h3>
+      <p className="text-white">My Research Extraction Center  is the best researching unit that makes all your research queries very easy and faster</p>
+      <Link href={'/research'} className="bg-pink-600 p-4 w-1/3 text-white rounded-lg font-semibold">Start Researching Now</Link>
+    </div>
+    <div className="flex-1">
+      <Image src={'/study_girl.png'} alt={'banner'} width={500} height={100} />
+    </div>
+  </div>
+)
+

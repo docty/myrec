@@ -36,7 +36,7 @@ export const synthesis = async (link: string[]) => {
 
         //     console.log((start / link.length) * 100);
         await sleep(10000);
-        //     //let response = null;
+        
         try {
 
 
@@ -87,7 +87,7 @@ const processPage = (url: URL, $: CheerioAPI) => {
     try {
 
         const title = $(journal.title).text();
-        let abstracts = $(journal.abstract);
+        const abstracts = $(journal.abstract);
 
         const abstract = abstracts.map((v, el) => $(el).text())
 

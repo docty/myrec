@@ -1,10 +1,10 @@
 const journalSelector: Record<string, IJournal> = {
 
-    'https://www.sciencedirect.com': {
+    'https://www.sciencedirect.com/': {
         title: '#screen-reader-main-title > span',
         abstract: '.abstract.author > div > p'
     },
-    'https://link.springer.com': {
+    'https://link.springer.com/': {
         title: '.c-article-title',
         abstract: '.c-article-section__content  > p'
     },
@@ -20,8 +20,8 @@ const journalSelector: Record<string, IJournal> = {
         title: '.citation__title',
         abstract: '.abstractSection '
     },
-    ' https://ieeexplore.ieee.org': {
-        title: '.document-title',
+    'https://ieeexplore.ieee.org': {
+        title: '.document-title > span',
         abstract: '.abstract-text > div > div > div'
     },
     'https://www.osti.gov': {
@@ -35,10 +35,6 @@ const journalSelector: Record<string, IJournal> = {
     'https://aip.scitation.org': {
         title: '.title',
         abstract: '.NLM_paragraph'
-    },
-    'https://ieeexplore.ieee.org': {
-        title: '.document-title', 
-        abstract: '.abstract-text.row > div > div > div'
     },
     'https://www.ncbi.nlm.nih.gov/': {
         title: '.content-title', 
