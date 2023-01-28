@@ -1,7 +1,7 @@
 'use client'
 import { useRef, useState } from "react";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
-
+import axios from "axios";
 export default function Home() {
   const [search, setSearch] = useState('location routing problems');
   const [isLoading, setIsLoading] = useState(false);
@@ -10,17 +10,30 @@ export default function Home() {
 
   let start = 0;
 
-  const getData = () => {
+  const getData = async () => {
     setIsLoading(true);
-    fetch(`api/research?q=${search}&start=${start}`)
-      .then(res => res.json())
-      .then(output => {
-        setData((p) => [...p, ...output])
 
-        setIsLoading(false)
-      }).catch(e => console.log(e))
 
-    start = start + 10
+    const result = await axios.get(`api/research?q=${search}&start=${start}`)
+
+    //const result = await fetch(`api/research?q=${search}&start=${start}`);
+
+    if (result.status) {
+      start = start + 10
+      console.log(result.data);
+      setData((p) => [...p, ...result.data])
+      setIsLoading(false);
+    } else {
+      console.log('error');
+      setIsLoading(false);
+    }
+
+    //setData((p) => [...p, ...output])
+
+
+
+
+
   }
 
 

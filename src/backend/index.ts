@@ -17,23 +17,24 @@ export const main = async (option: IOption) => {
   url.searchParams.set('btnG', '')
   url.searchParams.set('oq', 'r')
 
-
+  console.log(option.start);
   //console.log(url.href);
 
   try {
     //await page.goto(url.href)
     const { data } = await axios.get(url.href)
+    
+    
+    // const $ = load(data)
 
-    const $ = load(data)
+    // const link = await getLink($);
 
-    const link = await getLink($);
-
-    const container = await synthesis(link)
+    // const container = await synthesis(link)
 
 
 
     // await browser.close();
-    option.onComplete(container)
+    option.onComplete('container')
   } catch (error) {
     console.log('Error has occurred from main function \n', error);
     throw error;
